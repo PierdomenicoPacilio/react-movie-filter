@@ -68,6 +68,8 @@ function App() {
       <div>
         <select onChange={(e) => setSelectedGenre(e.target.value)} value={selectedGenre}>
           <option value="">---</option>
+          {/* genero ogni volta una nuova lista di array di generi, evitando le ripetizioni, e 
+          su questa itero per creare la lista dei generi da poter selezionare */}
           {[...new Set(allFilms.map(film => film.genre))].map((genre, index) => (
             <option key={index} value={genre}>{genre}</option>
           ))}
@@ -93,10 +95,7 @@ function App() {
         {films.length === 0 && <p>Nessun film trovato 😢</p>}
       </ul>
 
-      <form onSubmit={(e) => {
-        e.preventDefault()
-        addNewFilm
-      }}>
+      <form onSubmit={e => (e.preventDefault(), addNewFilm())}>
         <h3>Aggiungi un nuovo film 🍿</h3>
         <label>Titolo</label>
         <input
