@@ -14,22 +14,25 @@ function App() {
 
   const [films, setFilms] = useState(filmsArray)
   const [selectedGenre, setSelectedGenre] = useState("")
+  const [selectedFilm, setSelectedFilm] = useState("")
 
   useEffect(() => {
     let filteredFilms = filmsArray
-    if (selectedGenre === "") {
-    } else {
+    if (selectedGenre !== "") {
       filteredFilms = filmsArray.filter(film => film.genre === selectedGenre)
     }
+    if (selectedFilm !== "") {
+      filteredFilms = filteredFilms.filter(film => film.title.includes(selectedFilm))
+    }
     setFilms(filteredFilms)
-  }, [selectedGenre])
+  }, [selectedGenre, selectedFilm])
 
 
 
   return (
     <>
       <h1>React Movie Filter</h1>
-      <label>seleziona il genere</label>
+      <label>filtra per genere</label>
       <div>
         <select onChange={(event) => setSelectedGenre(event.target.value)} value={selectedGenre}>
           <option value="">---</option>
@@ -39,10 +42,16 @@ function App() {
           <option>Azione</option>
         </select>
       </div>
-
+      <label>filtra per nome</label>
+      <div>
+        <input
+          type="text"
+          value={selectedFilm}
+          onChange={(event) => setSelectedFilm(event.target.value)} />
+      </div>
       <ul>
-        {films.map(film =>
-          <li>
+        {films.map((film, index) =>
+          <li key={index}>
             <h4>{film.title}</h4>
             <p>{film.genre}</p>
           </li>)}
