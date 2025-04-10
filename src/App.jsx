@@ -8,6 +8,20 @@ function App() {
     { title: 'Batman', genre: 'Azione' },
     { title: 'Interstellar', genre: 'Fantascienza' },
     { title: 'Pulp Fiction', genre: 'Thriller' },
+    { title: 'Matrix', genre: 'Fantascienza' },
+    { title: 'Fantasia', genre: 'Animazione' },
+    { title: 'Forrest Gump', genre: 'Drammatico' },
+    { title: 'La La Land', genre: 'Musicale' },
+    { title: 'Fight Club', genre: 'Drammatico' },
+    { title: 'Il Signore degli Anelli', genre: 'Fantasy' },
+    { title: 'Avengers: Endgame', genre: 'Azione' },
+    { title: 'Her', genre: 'Fantascienza' },
+    { title: 'Joker', genre: 'Drammatico' },
+    { title: 'Amélie', genre: 'Romantico' },
+    { title: 'Shutter Island', genre: 'Thriller' },
+    { title: 'The Social Network', genre: 'Biografico' },
+    { title: 'Coco', genre: 'Animazione' },
+    { title: 'Whiplash', genre: 'Drammatico' }
   ]
 
 
@@ -62,55 +76,57 @@ function App() {
 
   return (
     <>
-      <h1>React Movie Filter 🎬</h1>
+      <main>
+        <h1>React Movie Filter 🎬</h1>
 
-      <label>Filtra per genere</label>
-      <div>
-        <select onChange={(e) => setSelectedGenre(e.target.value)} value={selectedGenre}>
-          <option value="">---</option>
-          {/* genero ogni volta una nuova lista di array di generi, evitando le ripetizioni, e 
+        <label>Filtra per genere</label>
+        <div>
+          <select onChange={(e) => setSelectedGenre(e.target.value)} value={selectedGenre}>
+            <option value="">---</option>
+            {/* genero ogni volta una nuova lista di array di generi, evitando le ripetizioni, e 
           su questa itero per creare la lista dei generi da poter selezionare */}
-          {[...new Set(allFilms.map(film => film.genre))].map((genre, index) => (
-            <option key={index} value={genre}>{genre}</option>
+            {[...new Set(allFilms.map(film => film.genre))].map((genre, index) => (
+              <option key={index} value={genre}>{genre}</option>
+            ))}
+          </select>
+        </div>
+
+        <label>Filtra per nome</label>
+        <div>
+          <input
+            type="text"
+            value={selectedFilm}
+            onChange={(e) => setSelectedFilm(e.target.value)}
+          />
+        </div>
+
+        <ul>
+          {films.map((film, index) => (
+            <li key={index}>
+              <h4>{film.title}</h4>
+              <p>{film.genre}</p>
+            </li>
           ))}
-        </select>
-      </div>
+          {films.length === 0 && <p>Nessun film trovato 😢</p>}
+        </ul>
 
-      <label>Filtra per nome</label>
-      <div>
-        <input
-          type="text"
-          value={selectedFilm}
-          onChange={(e) => setSelectedFilm(e.target.value)}
-        />
-      </div>
-
-      <ul>
-        {films.map((film, index) => (
-          <li key={index}>
-            <h4>{film.title}</h4>
-            <p>{film.genre}</p>
-          </li>
-        ))}
-        {films.length === 0 && <p>Nessun film trovato 😢</p>}
-      </ul>
-
-      <form onSubmit={e => (e.preventDefault(), addNewFilm())}>
-        <h3>Aggiungi un nuovo film 🍿</h3>
-        <label>Titolo</label>
-        <input
-          type="text"
-          value={newFilm}
-          onChange={(e) => setNewFilm(e.target.value)}
-        />
-        <label>Genere</label>
-        <input
-          type="text"
-          value={newFilmGenre}
-          onChange={(e) => setNewFilmGenre(e.target.value)}
-        />
-        <button>Aggiungi film</button>
-      </form>
+        <form onSubmit={e => (e.preventDefault(), addNewFilm())}>
+          <h3>Aggiungi un nuovo film 🍿</h3>
+          <label>Titolo</label>
+          <input
+            type="text"
+            value={newFilm}
+            onChange={(e) => setNewFilm(e.target.value)}
+          />
+          <label>Genere</label>
+          <input
+            type="text"
+            value={newFilmGenre}
+            onChange={(e) => setNewFilmGenre(e.target.value)}
+          />
+          <button>Aggiungi film</button>
+        </form>
+      </main>
     </>
   )
 }
