@@ -1,6 +1,9 @@
+import { useState } from "react"
+import { useEffect } from "react"
+
 function App() {
 
-  const films = [
+  const filmsArray = [
     { title: 'Inception', genre: 'Fantascienza' },
     { title: 'Il Padrino', genre: 'Thriller' },
     { title: 'Titanic', genre: 'Romantico' },
@@ -9,6 +12,18 @@ function App() {
     { title: 'Pulp Fiction', genre: 'Thriller' },
   ]
 
+  const [films, setFilms] = useState(filmsArray)
+  const [selectedGenre, setSelectedGenre] = useState("")
+
+  useEffect(() => {
+    let filteredFilms = filmsArray
+    if (selectedGenre === "") {
+    } else {
+      filteredFilms = filmsArray.filter(film => film.genre === selectedGenre)
+    }
+    setFilms(filteredFilms)
+  }, [selectedGenre])
+
 
 
   return (
@@ -16,7 +31,7 @@ function App() {
       <h1>React Movie Filter</h1>
       <label>seleziona il genere</label>
       <div>
-        <select>
+        <select onChange={(event) => setSelectedGenre(event.target.value)} value={selectedGenre}>
           <option value="">---</option>
           <option>Fantascienza</option>
           <option>Thriller</option>
